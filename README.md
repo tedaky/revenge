@@ -3,9 +3,15 @@
 ## API
 
 * Built using PHP
+* Server Apache
 * Connects to MySQL/MariaDB database
+* Copy `/api/libs/Controller.example.php` to `/api/libs/Controller.php`
+* Enter database connection credentials
+* Update all `.htaccess` files
 
-## 
+## Front End
+
+* Update any http connections to match API route
 
 # Angular CLI Readme
 
