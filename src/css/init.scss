@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+}
+
+app-component {
+    z-index: 3;
+    
+    &:empty {
+        & + .init-load {
+            z-index: 5;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+.init-load {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #fff;
+    opacity: 0;
+    z-index: -1;
+    visibility: hidden;
+    transition-delay: 200ms, 200ms, 0ms;
+    transition-property: z-index, visibility, opacity;
+    transition-duration: 0ms, 0ms, 200ms;
+    transition-timing-function: linear, linear, linear;
+}
+
+.init-load {
+    img {
+        position: absolute;
+        top: auto;
+        right: 50%;
+        bottom: 50%;
+        left: auto;
+        transform: translateX(50%) translateY(50%);
+        animation-name: loading-rotate;
+        animation-delay: 0s;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes loading-rotate {
+    from {
+        transform: translateX(50%) translateY(50%) rotateZ(0deg) 
+    }
+    to {
+        transform: translateX(50%) translateY(50%) rotateZ(360deg)
+    }
+}

@@ -1,0 +1,9 @@
+<div *ngFor="let image of images">
+    <img [src]="'http://www.quickstart.dev/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" [width]="image.image_width" [height]="image.image_height" /> <br>
+    <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_id }}</a> <br>
+    {{ image.image_original_name }} <br>
+    {{ image.image_cache }} <br>
+    {{ image.image_created | date:medium }} <br>
+    {{ image.image_modified | date:medium }}
+</div>
+<div *ngIf="imageMessage">{{imageMessage.error}}</div>

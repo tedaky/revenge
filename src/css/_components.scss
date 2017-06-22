@@ -1,0 +1,14 @@
+router-outlet {
+    display: none;
+}
+
+$components:
+    app-component
+    site-component
+    sitenav-component
+    admin-component
+    adminnav-component
+    admindashboard-component
+    image-component
+    add-image-component
+

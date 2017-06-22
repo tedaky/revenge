@@ -1,0 +1,8 @@
+<div class="main-container site-container">
+    <div class="site-wrapper">
+        <nav-site-component></nav-site-component>
+        <main>
+            <div *ngIf="site" [innerHtml]="site.body"></div>
+        </main>
+    </div>
+</div>

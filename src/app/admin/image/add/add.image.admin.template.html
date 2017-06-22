@@ -1,0 +1,11 @@
+<form (submit)="addImage(image, $event)">
+    <label for="image.image_original_name">Upload Image</label><br>
+    <input type="file" name="image.image_original_name" id="image.image_original_name" (change)="addFile($event)" accept="image/*" required><img width="40" height="40"><br>
+    <label for="image.image_alt">Alt text for image</label><br>
+    <input [(ngModel)]="image.image_alt" type="text" name="image.image_alt" id="image.image_alt" placeholder="Alt text for image"><br>
+    <label for="image.image_cache">Length of time in seconds image should be cached</label><br>
+    <input [(ngModel)]="image.image_cache" type="text" name="image.image_cache" id="image.image_cache" placeholder="Length of time in seconds image should be cached"><br>
+    <button type="submit">Save</button><br>
+</form>
+<p [hidden]="!imageMessage.success">{{ imageMessage.success }}</p>
+<p [hidden]="!imageMessage.error">{{ imageMessage.error }}</p>

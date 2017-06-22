@@ -1,0 +1,15 @@
+# Remove when on production server
+Header set Access-Control-Allow-Origin "*"
+
+RewriteEngine On
+
+RewriteRule ^api/$ api/ [L]
+RewriteRule ^api/(.*) api/$1 [L]
+
+# For test
+#RewriteRule ^$ src/ [L]
+#RewriteRule (.*) src/$1 [L]
+
+# For build
+RewriteRule ^$ dist/ [L]
+RewriteRule (.*) dist/$1 [L]

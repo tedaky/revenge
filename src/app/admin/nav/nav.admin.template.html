@@ -1,0 +1,13 @@
+<nav>
+    <ul>
+        <li><a [routerLink]="['/']" class="item"><b>Back to site</b></a></li>
+        <li><a [routerLink]="['/', 'admin']" class="item"><b>Dashboard</b></a></li>
+        <li><b class="item">Images</b>
+            <ul>
+                <li><a [routerLink]="['/', 'admin', 'image']" class="item"><b>Image List</b></a></li>
+                <li><a [routerLink]="['/', 'admin', 'image', 'add']" class="item"><b>Add Image</b></a></li>
+            </ul>
+        </li>
+        <li><a [routerLink]="['/', 'admin', 'page']" class="item"><b>Page List</b></a></li>
+    </ul>
+</nav>
