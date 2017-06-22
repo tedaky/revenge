@@ -4,10 +4,11 @@
 
 * Built using PHP
 * Server Apache
+* Update all `.htaccess` files
 * Connects to MySQL/MariaDB database
+* Execute database create schema script in `/api/schema.sql`
 * Copy `/api/libs/Controller.example.php` to `/api/libs/Controller.php`
 * Enter database connection credentials
-* Update all `.htaccess` files
 
 ## Front End
 
