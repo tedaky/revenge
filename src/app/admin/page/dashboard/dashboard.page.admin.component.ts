@@ -9,6 +9,7 @@ import { PageAdminService } from '../page.admin.service';
     moduleId: module.id,
     selector: 'dashboard-page-admin-component',
     templateUrl: 'dashboard.page.admin.template.html',
+    styleUrls: ['dashboard.page.admin.component.scss'],
     providers: [ PageAdminService ]
 })
 
@@ -20,22 +21,22 @@ export class DashboardPageAdminComponent {
     constructor(private pageService: PageAdminService, private route: ActivatedRoute) { }
 
     ngOnInit() {
-        // Subscribe to route params
-        this.sub = this.route.params.subscribe(params => {
-            // Retrieve Pet with Id route param
-            this.pageService.getPageList().subscribe(
-                (page) => {
-                    this.pages = page;
-                },
-                (err) => {
-                    this.pageMessage = err[0];
-                }
-            );
-        });
+        this.pages = [
+            {
+                page_id: 1,
+                page_title: 'Home Page',
+                page_slug: 'home'
+            },
+            {
+                page_id: 2,
+                page_title: 'About Page',
+                page_slug: 'about'
+            }
+        ];
     }
 
     ngOnDestroy() {
         // Clean sub to avoid memory leak
-        this.sub.unsubscribe();
+        //this.sub.unsubscribe();
     }
 }

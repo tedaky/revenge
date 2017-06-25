@@ -20,22 +20,11 @@ export class AddPageAdminComponent {
     constructor(private pageService: PageAdminService, private route: ActivatedRoute) { }
 
     ngOnInit() {
-        // Subscribe to route params
-        this.sub = this.route.params.subscribe(params => {
-            // Retrieve Pet with Id route param
-            this.pageService.getPageList().subscribe(
-                (page) => {
-                    this.pages = page;
-                },
-                (err) => {
-                    this.pageMessage = err[0];
-                }
-            );
-        });
+
     }
 
     ngOnDestroy() {
         // Clean sub to avoid memory leak
-        this.sub.unsubscribe();
+        //this.sub.unsubscribe();
     }
 }

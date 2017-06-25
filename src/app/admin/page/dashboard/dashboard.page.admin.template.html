@@ -1,7 +1,13 @@
-<ul>
-    <li *ngFor="let page of pages">
-        <strong>ID</strong>: {{ page.page_id }} <br />
-        <strong>Title</strong>: {{ page.page_title }} <br />
-        <strong>Slug</strong>: {{ page.page_slug }}
-    </li>
-</ul>
+<h1>Pages</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Slug</th>
+    </tr>
+    <tr *ngFor="let page of pages">
+        <td>{{ page.page_id }}</td>
+        <td>{{ page.page_title }}</td>
+        <td>{{ page.page_slug }}</td>
+    </tr>
+</table>
