@@ -161,13 +161,13 @@ class image extends Controller {
 
                 // throw error if fail
                 if (!$stmt->execute([$imageFileName, $imageMD5Name, $imageMimeType, $imageCache, $imageWidth, $imageHeight, $imageCM, $imageAlt])) {
-                    $json = json_decode('[{"success": "", "error": "Failed to execute"}]', true);
+                    $json = json_decode('[{"success": false, "error": "Failed to execute"}]', true);
                 } else {
                     // feedback
-                    $json = json_decode('[{"success": "image uploaded successfully", "error": ""}]', true);
+                    $json = json_decode('[{"success": "image uploaded successfully", "error": false}]', true);
                 }
             } else {
-                $json = json_decode('[{"success": "", "error": "An error occurred during upload"}]', true);
+                $json = json_decode('[{"success": false, "error": "An error occurred during upload"}]', true);
             }
             header('Content-Type: application/json; charset=UTF-8');
             echo json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );

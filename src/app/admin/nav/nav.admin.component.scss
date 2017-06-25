@@ -1,0 +1,27 @@
+ul {
+    margin: 0;
+}
+ul, li {
+    padding: 0;
+}
+li {
+    margin: 0;
+    list-style-type: none;
+
+    a {
+        padding: 1em 2em;
+        display: block;
+        color: #ababab;
+        text-decoration: none;
+        border-bottom: 1px solid #363636;
+        transition: background-color 250ms;
+
+        &:hover {
+            background-color: #252525
+        }
+    }
+    .active-link {
+        background-color: #363636;
+        color: #fff;
+    }
+}

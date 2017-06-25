@@ -17,9 +17,8 @@ main {
 
     nav-site-component,
     nav-admin-component {
-        flex: 0 0 auto;
+        flex: 0 1 auto;
         overflow: auto;
-        width: 180px;
     }
     .site-wrapper {
         display: flex;
@@ -35,7 +34,7 @@ main {
         color: #fff;
 
         & > main {
-            flex: 1 1 auto;
+            flex: 1 0 auto;
             overflow: auto;
             position: relative;
             padding-right: 32px;
@@ -59,17 +58,6 @@ main {
             }
         }
     }
-}
-
-site-component {
-    background-image: url('http://www.quickstart.dev/api/image/src/a4e0c9c48aefca8d45c8fe5044a27ca0');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-
-    display: flex;
-    height: 100vh;
-    align-items: center;
 }
 
 .site-container {
@@ -101,28 +89,5 @@ site-component {
 }
 
 nav-admin-component {
-    background-color: #5a5a5a;
-
-    ul {
-        margin: 0.5em 0;
-    }
-    ul, li {
-        padding: 0;
-    }
-    li {
-        margin: 0;
-        list-style-type: none;
-
-        .item {
-            padding: 0.5em 1.5em;
-            display: block;
-            color: #fff;
-            text-decoration: none;
-            transition: background-color 250ms;
-
-            &:hover {
-                background-color: #252525
-            }
-        }
-    }
+    background-color: #444;
 }

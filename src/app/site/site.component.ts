@@ -10,6 +10,7 @@ import { Site, SiteMeta } from './site';
     moduleId: module.id,
     selector: 'site-component',
     templateUrl: 'site.template.html',
+    styleUrls: ['./site.component.scss'],
     providers: [ SiteService ]
 })
 
@@ -25,7 +26,7 @@ export class SiteComponent implements OnInit, OnDestroy {
         // Subscribe to route params
         this.sub = this.route.params.subscribe(params => {
             this.slug = params['slug'];
-            
+
             // Retrieve Pet with Id route param
             this.siteService.getSite(this.slug).subscribe(
                 (site) => {

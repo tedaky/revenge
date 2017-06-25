@@ -58,7 +58,6 @@ export class ImageAdminService {
         }
     }
 
-
     addImage(image: ImageAdmin) {
         this.call = '/api/image/insertImage';
 

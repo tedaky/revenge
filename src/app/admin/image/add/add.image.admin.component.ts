@@ -32,7 +32,7 @@ export class AddImageAdminComponent {
         reader.onload = function(e: ProgressEvent) {
             (<HTMLImageElement>(<HTMLInputElement>event.target).nextElementSibling).src = (<FileReader>e.target).result;
         }
-        
+
         if((<HTMLInputElement>event.target).value.length && (<HTMLInputElement>event.target).files[0].type.match('image')){
             reader.readAsDataURL((<HTMLInputElement>event.target).files[0]);
             this.image.image_original_name = (<HTMLInputElement>event.target).files[0];
@@ -42,7 +42,7 @@ export class AddImageAdminComponent {
             this.image.image_original_name = '';
         }
     }
-    
+
     addImage(image: ImageAdmin, event: Event) {
         this.imageService.addImage(image).subscribe(
             (img) => {
