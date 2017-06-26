@@ -3,13 +3,15 @@ import { Headers, Http } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/map';
 
-//import { Page, PageTotal, PageAdminMessage } from './page.admin';
+import { Page, PageAdminMessage } from './page.admin';
 
 @Injectable()
 export class PageAdminService {
     url: string;
     call: string;
     id: number;
+
+    headers = new Headers({ 'Content-Type': 'multipart/form-data' });
 
     constructor (private http: Http) { }
 
@@ -54,6 +56,31 @@ export class PageAdminService {
                 }
             );
         }
+    }
+
+    addPage(page: Page) {
+        this.call = '/api/page/insertPage';
+
+        if (!/localhost/.test(document.location.host)) {
+            this.url = this.call;
+        } else {
+            this.url = 'http://www.quickstart.dev' + this.call;
+        }
+
+        let input = new FormData();
+        input.append("page_slug", page.page_slug);
+        input.append("page_title", page.page_title);
+        input.append("page_body", page.page_body);
+
+        return this.http.post(this.url, input, this.headers).map(
+            (res) => {
+                if (res.status !== 200) {
+                    throw new Error('page not found: ' + res.status);
+                } else {
+                    return res.json();
+                }
+            }
+        );
     }
 }
 

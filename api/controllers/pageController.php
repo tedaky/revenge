@@ -89,7 +89,25 @@ class page extends Controller {
 
     function insertPage() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pageSlug = $_POST['page_slug'];
+            $pageTitle = $_POST['page_title'];
+            $pageBody = $_POST['page_body'];
 
+            // query stored procedure
+            $sql = "CALL insert_page(?, ?, ?);";
+
+            // prepare the statement
+            $stmt = $this->conn->prepare($sql);
+
+            if (!$stmt->execute([$pageSlug, $pageTitle, $pageBody])) {
+                $json = json_decode('[{"success": false, "error": "Failed to execute"}]', true);
+            } else {
+                // feedback
+                $json = json_decode('[{"success": "Page added successfully", "error": false}]', true);
+            }
+
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
         }
     }
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'
 
 import { ImageAdmin, ImageAdminMessage } from '../image.admin';
 import { ImageAdminService } from '../image.admin.service';
@@ -16,7 +15,7 @@ export class AddImageAdminComponent {
     image: ImageAdmin;
     imageMessage?: ImageAdminMessage;
 
-    constructor(private imageService: ImageAdminService, private router: Router) { }
+    constructor(private imageService: ImageAdminService) { }
 
     ngOnInit() {
         this.image = {
