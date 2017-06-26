@@ -9,6 +9,7 @@ import { ImageAdminService } from '../image.admin.service';
     moduleId: module.id,
     selector: 'detail-image-admin-component',
     templateUrl: 'detail.image.admin.template.html',
+    styleUrls: ['detail.image.admin.component.scss'],
     providers: [ ImageAdminService ]
 })
 
@@ -24,7 +25,7 @@ export class DetailImageAdminComponent {
         // Subscribe to route params
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
-            
+
             // Retrieve Pet with Id route param
             this.imageService.getImage(this.id).subscribe(
                 (img) => {

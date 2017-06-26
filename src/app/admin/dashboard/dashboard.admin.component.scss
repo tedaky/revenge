@@ -24,7 +24,16 @@ li {
         &:hover {
             border-color: #797979;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+
+            img {
+                opacity: 1;
+            }
         }
+    }
+
+    img {
+        opacity: 0.5;
+        transition: 250ms opacity;
     }
 
     span {

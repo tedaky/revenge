@@ -1,9 +1,30 @@
-<div *ngIf="image">
-    <img [src]="'http://www.quickstart.dev/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" [width]="image.image_width" [height]="image.image_height" /> <br>
-    {{ image.image_id }} <br>
-    {{ image.image_original_name }} <br>
-    {{ image.image_cache }} <br>
-    {{ image.image_created | date:medium }} <br>
-    {{ image.image_modified | date:medium }}
-    <button type="button" (click)="deleteImage()">Delete</button>
+<div *ngIf="image" class="image-wrapper">
+    <div class="image-container">
+        <img [src]="'http://www.quickstart.dev/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" [width]="image.image_width" [height]="image.image_height" />
+    </div>
+    <div class="image-content">
+        <div>
+            <strong>Image Id</strong><br>
+            {{ image.image_id }}
+        </div>
+        <div>
+            <strong>Image Original Name</strong><br>
+            {{ image.image_original_name }}
+        </div>
+        <div>
+            <strong>Image Cache</strong><br>
+            {{ image.image_cache }}
+        </div>
+        <div>
+            <strong>Image Created</strong><br>
+            {{ image.image_created | date:medium }}
+        </div>
+        <div>
+            <strong>Image Modified</strong><br>
+            {{ image.image_modified | date:medium }}
+        </div>
+        <div>
+            <button type="button" (click)="deleteImage()">Delete</button>
+        </div>
+    </div>
 </div>

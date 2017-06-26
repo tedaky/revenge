@@ -4,8 +4,6 @@
         <th>Thumbnail</th>
         <th>Id</th>
         <th>Upload Name</th>
-        <th>Cache</th>
-        <th>Created</th>
         <th>Modified</th>
     </tr>
     <tr *ngFor="let image of images">
@@ -19,12 +17,6 @@
         </td>
         <td>
             <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_original_name }}</a>
-        </td>
-        <td>
-            {{ image.image_cache }}
-        </td>
-        <td>
-            {{ image.image_created | date:medium }}
         </td>
         <td>
             {{ image.image_modified | date:medium }}
