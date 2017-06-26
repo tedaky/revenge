@@ -9,7 +9,7 @@
     <tr *ngFor="let image of images">
         <td>
             <a [routerLink]="['/', 'admin', 'image', image.image_id]">
-                <img [src]="'http://www.quickstart.dev/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" width="35" height="35" />
+                <img [src]="'/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" width="35" height="35" />
             </a>
         </td>
         <td>
