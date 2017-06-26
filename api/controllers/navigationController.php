@@ -29,17 +29,21 @@ class navigation extends Controller {
                         ']'
                     ) AS 'page'
                 FROM `page`";
-        
+
         $stmt = $this->conn->prepare($sql);
-        if (!$stmt->execute([$slug])) {
+        if (!$stmt->execute()) {
            throw new Exception('Failed to execute');
         }
 
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $results[0]['page'] = str_replace('^^^', '"', $results[0]['page']);
-        
+
         header('Content-Type: application/json; charset=UTF-8');
         echo json_encode(json_decode($results[0]['page'], false), JSON_PRETTY_PRINT);
+    }
+
+    function __destruct() {
+        $conn = null;
     }
 }

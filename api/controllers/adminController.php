@@ -14,4 +14,8 @@ class admin extends auth {
         // sample to call methods from authController
         $this->auth->index();
     }
+
+    function __destruct() {
+        $conn = null;
+    }
 }

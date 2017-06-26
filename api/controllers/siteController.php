@@ -4,7 +4,7 @@ class site extends Controller {
     function __construct() {
         parent::__construct();
     }
-    
+
     function Index() { }
 
     function Page($slug = '') {
@@ -27,7 +27,7 @@ class site extends Controller {
                         '[{',
                         '^^^title^^^', ':', '^^^', `page`.`page_title`, '^^^', ',',
                         '^^^body^^^', ':', '^^^', `page`.`page_body`, '^^^', ',',
-                    
+
                         '^^^meta^^^', ':',
                             CONCAT(
                                 '[',
@@ -49,7 +49,7 @@ class site extends Controller {
                 LEFT OUTER JOIN `meta`
                 ON `meta`.`meta_id` = `page_meta`.`page_meta_mid`
                 WHERE `page`.`page_slug` = ?";
-        
+
         $stmt = $this->conn->prepare($sql);
         if (!$stmt->execute([$slug])) {
            throw new Exception('Failed to execute');
@@ -61,7 +61,7 @@ class site extends Controller {
         $results[0]['page'] = preg_replace('/\n/m', '\\n', $results[0]['page']);
         // converts beginning and ending of json to (")
         $results[0]['page'] = str_replace('^^^', '"', $results[0]['page']);
-        
+
         if ( $results[0]['page'] == null) {
             header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
             $json = json_decode('[{"body": "page not found"}]', true);
