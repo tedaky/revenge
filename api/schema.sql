@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `revenge` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `revenge`;
+CREATE DATABASE  IF NOT EXISTS `ericangular` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `ericangular`;
 -- MySQL dump 10.15  Distrib 10.0.29-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: localhost
@@ -37,8 +37,18 @@ CREATE TABLE `image` (
   `image_alt` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`image_id`),
   UNIQUE KEY `media_unique_name_UNIQUE` (`image_unique_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `image`
+--
+
+LOCK TABLES `image` WRITE;
+/*!40000 ALTER TABLE `image` DISABLE KEYS */;
+INSERT INTO `image` VALUES (1,'loading.svg','loading','image/svg+xml',31622400,64,64,'2017-06-25 11:09:20','2017-06-25 11:09:20','loading'),(2,'image_icon.svg','image_icon','image/svg+xml',31622400,55,51,'2017-06-25 15:52:20','2017-06-25 15:52:20','Image Icon'),(3,'page_icon.svg','page_icon','image/svg+xml',31622400,42,56,'2017-06-25 15:52:20','2017-06-25 15:52:20','Page Icon');
+/*!40000 ALTER TABLE `image` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `meta`
@@ -56,6 +66,16 @@ CREATE TABLE `meta` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `meta`
+--
+
+LOCK TABLES `meta` WRITE;
+/*!40000 ALTER TABLE `meta` DISABLE KEYS */;
+INSERT INTO `meta` VALUES (1,'keywords','portfolio'),(2,'description','Eric\'s Portfolio');
+/*!40000 ALTER TABLE `meta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `page`
 --
 
@@ -69,8 +89,18 @@ CREATE TABLE `page` (
   `page_body` longtext,
   PRIMARY KEY (`page_id`),
   UNIQUE KEY `page_slug_UNIQUE` (`page_slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `page`
+--
+
+LOCK TABLES `page` WRITE;
+/*!40000 ALTER TABLE `page` DISABLE KEYS */;
+INSERT INTO `page` VALUES (1,'','Home Page','I am the home page'),(2,'about','About Page','I am the about page');
+/*!40000 ALTER TABLE `page` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `page_meta`
@@ -84,8 +114,18 @@ CREATE TABLE `page_meta` (
   `page_meta_pid` varchar(55) NOT NULL,
   `page_meta_mid` varchar(55) NOT NULL,
   PRIMARY KEY (`page_meta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `page_meta`
+--
+
+LOCK TABLES `page_meta` WRITE;
+/*!40000 ALTER TABLE `page_meta` DISABLE KEYS */;
+INSERT INTO `page_meta` VALUES (1,'1','1'),(2,'1','2');
+/*!40000 ALTER TABLE `page_meta` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -111,11 +151,20 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping events for database 'revenge'
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'ericangular'
 --
 
 --
--- Dumping routines for database 'revenge'
+-- Dumping routines for database 'ericangular'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `delete_image` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -127,13 +176,13 @@ CREATE TABLE `user` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `delete_image`(IN arg INT)
+CREATE PROCEDURE `delete_image`(IN arg INT)
     DETERMINISTIC
 BEGIN
 	SELECT `image`.`image_unique_name`
 	FROM `image`
 	WHERE `image`.`image_id` = arg;
-    
+
 	DELETE FROM `image`
     WHERE `image`.`image_id` = arg;
 END ;;
@@ -152,7 +201,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `get_image`(IN arg VARCHAR(120))
+CREATE PROCEDURE `get_image`(IN arg VARCHAR(120))
     DETERMINISTIC
 BEGIN
 	SELECT `image`.`image_unique_name`, `image`.`image_mime_type`, `image`.`image_cache`, `image`.`image_modified`
@@ -174,7 +223,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `get_image_info`(IN arg INT)
+CREATE PROCEDURE `get_image_info`(IN arg INT)
     DETERMINISTIC
 BEGIN
 	SELECT
@@ -206,11 +255,66 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `get_image_list`()
+CREATE PROCEDURE `get_image_list`()
     DETERMINISTIC
 BEGIN
 	SELECT `image_id`, `image_original_name`, `image_unique_name`, `image_cache`, `image_width`, `image_height`, `image_created`, `image_modified`, `image_alt`
     FROM `image`;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_page_info_part_1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `get_page_info_part_1`(IN arg INT)
+    DETERMINISTIC
+BEGIN
+	SELECT
+		`page`.`page_id`,
+        `page`.`page_slug`,
+        `page`.`page_title`,
+        `page`.`page_body`
+	FROM `page`
+    WHERE `page`.`page_id` = arg;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_page_info_part_2` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `get_page_info_part_2`(IN arg INT)
+    DETERMINISTIC
+BEGIN
+	SELECT
+		`meta`.`meta_id`,
+        `meta`.`meta_name`,
+        `meta`.`meta_content`
+	FROM `meta`
+    JOIN `page_meta`
+    ON `meta`.`meta_id` = `page_meta`.`page_meta_mid`
+    JOIN `page`
+    ON `page_meta`.`page_meta_pid` = `page`.`page_id`
+    WHERE `page`.`page_id` = arg;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -227,14 +331,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `get_page_list`()
+CREATE PROCEDURE `get_page_list`()
     DETERMINISTIC
 BEGIN
-	SELECT 
-		`quickstart`.`page`.`page_id`,
-        `quickstart`.`page`.`page_title`,
-        `quickstart`.`page`.`page_slug`
-	FROM `quickstart`.`page`;
+	SELECT
+		`page`.`page_id`,
+        `page`.`page_title`,
+        `page`.`page_slug`
+	FROM `page`;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -251,7 +355,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `insert_image`(
+CREATE PROCEDURE `insert_image`(
 	IN imageFileName VARCHAR(120),
     IN imageMD5Name VARCHAR(120),
     IN imageMimeType VARCHAR(45),
@@ -263,7 +367,7 @@ CREATE DEFINER=`revenge`@`%` PROCEDURE `insert_image`(
 )
     DETERMINISTIC
 BEGIN
-	INSERT INTO `quickstart`.`image`
+	INSERT INTO `image`
 	(
 		`image_original_name`,
 		`image_unique_name`,
@@ -304,7 +408,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `update_image`(
+CREATE PROCEDURE `update_image`(
 	IN imageId INT,
 	IN imageMimeType VARCHAR(45),
     IN imageCache INT,
@@ -315,15 +419,15 @@ CREATE DEFINER=`revenge`@`%` PROCEDURE `update_image`(
 )
     DETERMINISTIC
 BEGIN
-	UPDATE `quickstart`.`image`
+	UPDATE `image`
 	SET
 	`image_mime_type` = imageMimeType,
 	`image_width` = imageWidth,
 	`image_height` = imageHeight,
 	`image_modified` = imageModified
 	WHERE `image_id` = imageID;
-    
-    CALL `quickstart`.`update_image_stats` (imageID, imageCache, imageAlt);
+
+    CALL `update_image_stats` (imageID, imageCache, imageAlt);
 
 END ;;
 DELIMITER ;
@@ -341,14 +445,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`revenge`@`%` PROCEDURE `update_image_stats`(
+CREATE PROCEDURE `update_image_stats`(
 	IN imageId INT,
     IN imageCache INT,
     IN imageAlt INT
 )
     DETERMINISTIC
 BEGIN
-	UPDATE `quickstart`.`image`
+	UPDATE `image`
 	SET
 	`image_cache` = imageCache,
 	`image_alt` = imageAlt
@@ -369,4 +473,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-22 14:40:33
+-- Dump completed on 2017-06-26 12:15:59

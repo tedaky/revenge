@@ -2,8 +2,11 @@ RewriteEngine On
 
 RewriteBase /api/
 
-RewriteCond %{HTTP_HOST} ^quickstart.dev
-RewriteRule ^(.*)$ http://www.quickstart.dev/$1 [R=301,L]
+#RewriteCond %{HTTP_HOST} ^quickstart.dev
+#RewriteRule ^(.*)$ http://www.quickstart.dev/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^etiedeken.com
+RewriteRule ^(.*)$ http://www.etiedeken.com/$1 [R=301,L]
 
 # If an existing asset or directory is requested go to it as it is
 # RewriteCond %{REQUEST_FILENAME} !-f
