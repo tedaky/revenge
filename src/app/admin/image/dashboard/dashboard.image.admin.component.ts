@@ -9,6 +9,7 @@ import { ImageAdminService } from '../image.admin.service';
     moduleId: module.id,
     selector: 'dashboard-image-admin-component',
     templateUrl: 'dashboard.image.admin.template.html',
+    styleUrls: ['dashboard.image.admin.component.scss'],
     providers: [ ImageAdminService ]
 })
 
@@ -25,7 +26,6 @@ export class DashboardImageAdminComponent {
             // Retrieve Pet with Id route param
             this.imageService.getImageList().subscribe(
                 (image) => {
-                    console.log(image[0]);
                     if(image[0].error) {
                         this.imageMessage = image[0];
                     } else {
@@ -33,7 +33,7 @@ export class DashboardImageAdminComponent {
                     }
                 },
                 (err) => {
-                    console.log(err[0]);
+                    console.log(err);
                 }
             );
         });

@@ -21,18 +21,16 @@ export class DashboardPageAdminComponent {
     constructor(private pageService: PageAdminService, private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.pages = [
-            {
-                page_id: 1,
-                page_title: 'Home Page',
-                page_slug: 'home'
-            },
-            {
-                page_id: 2,
-                page_title: 'About Page',
-                page_slug: 'about'
-            }
-        ];
+        this.sub = this.route.params.subscribe(params => {
+            this.pageService.getPageList().subscribe(
+                (page) => {
+                    this.pages = page;
+                },
+                (err) => {
+                    console.log(err);
+                }
+            );
+        });
     }
 
     ngOnDestroy() {

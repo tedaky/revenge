@@ -8,6 +8,7 @@ import { ImageAdminService } from '../image.admin.service';
     moduleId: module.id,
     selector: 'add-image-admin-component',
     templateUrl: 'add.image.admin.template.html',
+    styleUrls: ['add.image.admin.component.scss'],
     providers: [ ImageAdminService ]
 })
 

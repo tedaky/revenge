@@ -1,9 +1,34 @@
-<div *ngFor="let image of images">
-    <img [src]="'http://www.quickstart.dev/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" [width]="image.image_width" [height]="image.image_height" /> <br>
-    <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_id }}</a> <br>
-    {{ image.image_original_name }} <br>
-    {{ image.image_cache }} <br>
-    {{ image.image_created | date:medium }} <br>
-    {{ image.image_modified | date:medium }}
-</div>
+<h1>Image List</h1>
+<table>
+    <tr>
+        <th>Thumbnail</th>
+        <th>Id</th>
+        <th>Upload Name</th>
+        <th>Cache</th>
+        <th>Created</th>
+        <th>Modified</th>
+    </tr>
+    <tr *ngFor="let image of images">
+        <td>
+            <a [routerLink]="['/', 'admin', 'image', image.image_id]">
+                <img [src]="'http://www.quickstart.dev/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" width="35" height="35" />
+            </a>
+        </td>
+        <td>
+            <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_id }}</a>
+        </td>
+        <td>
+            <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_original_name }}</a>
+        </td>
+        <td>
+            {{ image.image_cache }}
+        </td>
+        <td>
+            {{ image.image_created | date:medium }}
+        </td>
+        <td>
+            {{ image.image_modified | date:medium }}
+        </td>
+    </tr>
+</table>
 <div *ngIf="imageMessage">{{imageMessage.error}}</div>

@@ -101,7 +101,7 @@ class image extends Controller {
                 $json = json_decode('[{"success": "", "error": "Failed to delete"}]', true);
             } else {
                 // feedback
-                unlink(ROOT . '/img/' . $results[image_unique_name]);
+                unlink(ROOT . '/img/' . @$results[image_unique_name]);
                 $json = json_decode('[{"success": "image deleted successfully", "error": ""}]', true);
             }
 

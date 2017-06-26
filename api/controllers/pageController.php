@@ -17,15 +17,11 @@ class page extends Controller {
             }
 
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($results == null) {
-                header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
-                $json = json_decode('[{"success": "", "error": "No pages found"}]', true);
-            } else {
-                $json = json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-            }
+
+            $json = json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
             header('Content-Type: application/json; charset=UTF-8');
             echo $json;
-            //echo json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
         }
     }
 
