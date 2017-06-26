@@ -58,7 +58,7 @@ class page extends Controller {
                 if (!$stmt->execute([$arg])) {
                     throw new Exception('Failed to execute');
                 }
-                $results[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $results["page"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 // Close existing connection
                 $stmt->closeCursor();
 
@@ -69,7 +69,10 @@ class page extends Controller {
                     throw new Exception('Failed to execute');
                 }
 
-                $results[] = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+                $temp = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+                if($temp != null) {
+                    $results["meta"] = $temp;
+                }
 
                 if ($results == null) {
                     header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');

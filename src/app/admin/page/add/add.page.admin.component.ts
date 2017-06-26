@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router'
 
-import { PageAdmin, PageAdminList, PageAdminMessage } from '../page.admin';
+import { Page, PageAdminMessage } from '../page.admin';
 import { PageAdminService } from '../page.admin.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { PageAdminService } from '../page.admin.service';
 })
 
 export class AddPageAdminComponent {
-    pages: PageAdmin[];
+    pages: Page[];
     pageMessage?: PageAdminMessage;
     sub: any;
 

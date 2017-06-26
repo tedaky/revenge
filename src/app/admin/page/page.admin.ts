@@ -1,13 +1,19 @@
-export class PageAdmin {
+export class Page {
     page_id?: number;
-    page_title?: any;
+    page_title?: string;
     page_slug?: string;
+    page_body?: string;
 }
 
-export class PageAdminList {
-    page_id?: number;
-    page_title?: any;
-    page_slug?: string;
+export class PageMeta {
+    meta_id?: number;
+    meta_name?: string;
+    meta_content?: string;
+}
+
+export class PageTotal {
+    page?: Page;
+    meta?: PageMeta[];
 }
 
 export class PageAdminMessage {

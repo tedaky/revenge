@@ -1,0 +1,37 @@
+<h1>Page Details</h1>
+<div *ngIf="page">
+    <div>
+        <strong>Page Id</strong><br>
+        {{ page.page_id }}
+    </div>
+    <div>
+        <strong>Page Slug</strong><br>
+        {{ page.page_slug }}
+    </div>
+    <div>
+        <strong>Page Title</strong><br>
+        {{ page.page_title }}
+    </div>
+    <div>
+        <strong>Page Body</strong><br>
+        {{ page.page_body }}
+    </div>
+    <h2 *ngIf="pageMeta">Meta</h2>
+    <div *ngFor="let meta of pageMeta">
+        <div>
+            <strong>Meta Id</strong><br>
+            {{ meta.meta_id }}
+        </div>
+        <div>
+            <strong>Meta Name</strong><br>
+            {{ meta.meta_name }}
+        </div>
+        <div>
+            <strong>Meta Content</strong><br>
+            {{ meta.meta_content }}
+        </div>
+    </div>
+    <div>
+        <button type="button">Delete</button>
+    </div>
+</div>
