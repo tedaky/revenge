@@ -23,15 +23,15 @@ class Bootstrap {
 
         // get the controller
         $controllerCall = array_shift( $url );
-        if ( $url[0] ) {
+        if ( @$url[0] ) {
             // get the method
             $method = array_shift( $url );
-            if ( $url[0] ) {
+            if ( @$url[0] ) {
                 // get the param
                 $param = implode( '/', $url );
             }
         }
-        
+
         // use the controller file
         require_once( ROOT . '/controllers/' . $controllerCall . 'Controller.php' );
         // call the controller
@@ -43,7 +43,7 @@ class Bootstrap {
                 $controller->{ $method }( $param );
             }
         } else {
-            // check the controller method 
+            // check the controller method
             if ( isset( $method ) ) {
                 $method = ucfirst( $method );
                 if( method_exists( $controller, $method ) ) {
