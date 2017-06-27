@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Page, PageMeta, PageTotal, PageAdminMessage } from '../page.admin';
 import { PageAdminService } from '../page.admin.service';
@@ -19,8 +20,9 @@ export class DetailPageAdminComponent {
     pageMessage?: PageAdminMessage;
     sub: any;
     id: number;
+    body: any;
 
-    constructor(private pageService: PageAdminService, private route: ActivatedRoute, private router: Router) { }
+    constructor(private pageService: PageAdminService, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
         // Subscribe to route params
@@ -31,10 +33,15 @@ export class DetailPageAdminComponent {
             this.pageService.getPage(this.id).subscribe(
                 (page) => {
                     this.page = page.page[0];
+
+                    this.body = this.sanitizer.bypassSecurityTrustHtml(this.page.page_body);
+                    this.page.page_body = this.body;
+
                     this.pageMeta = page.meta;
                 },
                 (err) => {
                     console.log(err);
+                    this.router.navigate(['admin', 'page']);
                 }
             );
         });

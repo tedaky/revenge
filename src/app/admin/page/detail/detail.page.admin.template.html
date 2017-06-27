@@ -14,7 +14,7 @@
     </div>
     <div>
         <strong>Page Body</strong><br>
-        {{ page.page_body }}
+        <section [innerHtml]="page.page_body"></section>
     </div>
     <h2 *ngIf="pageMeta">Meta</h2>
     <div *ngFor="let meta of pageMeta">

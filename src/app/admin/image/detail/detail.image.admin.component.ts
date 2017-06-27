@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ImageAdminMessage, FullImageAdmin } from '../image.admin';
 import { ImageAdminService } from '../image.admin.service';
