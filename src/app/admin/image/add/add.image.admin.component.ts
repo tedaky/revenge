@@ -16,15 +16,31 @@ export class AddImageAdminComponent {
     image: ImageAdmin;
     imageMessage?: ImageAdminMessage;
 
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+
     constructor(private imageService: ImageAdminService, private router: Router) { }
 
     ngOnInit() {
         this.image = {
-            image_original_name: '',
-            image_cache: 7257600,
-            image_alt: 'Alt text here'
+            image_original_name: null,
+            image_cache: null,
+            image_alt: null
         };
         this.imageMessage = {};
+
+        this.days = 0;
+        this.hours = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+
+        this.updateCache();
+    }
+
+    updateCache() {
+        this.image.image_cache = (this.days * 24 * 60 * 60) + (this.hours * 60 * 60) + (this.minutes * 60) + (this.seconds);
     }
 
     addFile(event: Event) {

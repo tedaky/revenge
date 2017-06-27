@@ -11,6 +11,19 @@ input[type="text"] {
     padding: 0.5em 1em;
 }
 
+.time {
+    display: inline-block;
+    max-width: 80px;
+
+    input[type="number"] {
+        box-sizing: border-box;
+        width: 100%;
+        border: 1px solid #c7c7c7;
+        border-radius: 0.25em;
+        padding: 0.5em 1em;
+    }
+}
+
 button {
     border-radius: 0.25em;
     padding: 0.5em 1em;
