@@ -82,6 +82,7 @@ class page extends Controller {
                 }
 
                 header('Content-Type: application/json; charset=UTF-8');
+                header('Expires: ' . date('D, d M Y H:i:s', time() + ($results["page"][0]["page_cache"])));
                 echo json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             }
         }
@@ -111,14 +112,15 @@ class page extends Controller {
             $pageSlug = $_POST['page_slug'];
             $pageTitle = $_POST['page_title'];
             $pageBody = $_POST['page_body'];
+            $pageCache = $_POST['page_cache'];
 
             // query stored procedure
-            $sql = "CALL insert_page(?, ?, ?);";
+            $sql = "CALL insert_page(?, ?, ?, ?);";
 
             // prepare the statement
             $stmt = $this->conn->prepare($sql);
 
-            if (!$stmt->execute([$pageSlug, $pageTitle, $pageBody])) {
+            if (!$stmt->execute([$pageSlug, $pageTitle, $pageBody, $pageCache])) {
                 $json = json_decode('[{"success": false, "error": "Failed to execute"}]', true);
             } else {
                 // feedback

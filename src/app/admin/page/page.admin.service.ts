@@ -71,6 +71,7 @@ export class PageAdminService {
         input.append("page_slug", page.page_slug);
         input.append("page_title", page.page_title);
         input.append("page_body", page.page_body);
+        input.append("page_cache", page.page_cache.toString());
 
         return this.http.post(this.url, input, this.headers).map(
             (res) => {

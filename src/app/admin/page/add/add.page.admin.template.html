@@ -12,7 +12,24 @@
         <label for="page.page_body">Page Content</label><br>
         <textarea [(ngModel)]="page.page_body" name="page.page_body" id="page.page_body" placeholder="Page Content" required></textarea>
     </div>
-    <div>
-        <button type="submit">Save</button>
+    <label for="page.page_cache">Length of time page should be cached</label><br>
+    <div class="time">
+        <label for="days">Days</label><br>
+        <input type="number" min="0" [(ngModel)]="days" id="days" name="days" placeholder="days" (input)="updateCache()" (change)="updateCache()">
     </div>
+    <div class="time">
+        <label for="hours">Hours</label><br>
+        <input type="number" min="0" [(ngModel)]="hours" id="hours" name="hours" placeholder="hours" (input)="updateCache()" (change)="updateCache()">
+    </div>
+    <div class="time">
+        <label for="minutes">Minutes</label><br>
+        <input type="number" min="0" [(ngModel)]="minutes" id="minutes" name="minutes" placeholder="minutes" (input)="updateCache()" (change)="updateCache()">
+    </div>
+    <div class="time">
+        <label for="seconds">Seconds</label><br>
+        <input type="number" min="0" [(ngModel)]="seconds" id="seconds" name="seconds" placeholder="seconds" (input)="updateCache()" (change)="updateCache()">
+    </div>
+    <input [(ngModel)]="page.page_cache" type="hidden" name="page.page_cache" id="page.page_cache">
+    <br>
+    <button type="submit">Save</button>
 </form>

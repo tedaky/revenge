@@ -3,6 +3,7 @@ export class Page {
     page_title?: string;
     page_slug?: string;
     page_body?: string;
+    page_cache?: number;
 }
 
 export class PageMeta {
