@@ -1,5 +1,5 @@
 <h1>Image Uploader</h1>
-<form (submit)="addImage(image, $event)">
+<form (submit)="addImage(image)">
     <div>
         <label for="image.image_original_name">Upload Image</label><br>
         <input type="file" name="image.image_original_name" id="image.image_original_name" (change)="addFile($event)" accept="image/*" required>

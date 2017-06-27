@@ -45,4 +45,19 @@ export class DetailPageAdminComponent {
         this.sub.unsubscribe();
     }
 
+    deletePage() {
+        this.sub = this.route.params.subscribe(params =>{
+            this.id = params['id'];
+
+            this.pageService.deletePage(this.id).subscribe(
+                (img) => {
+                    this.router.navigate(['admin', 'page']);
+                },
+                (err) => {
+                    console.log(err);
+                }
+            );
+        });
+    }
+
 }

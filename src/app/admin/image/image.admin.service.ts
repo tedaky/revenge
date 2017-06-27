@@ -3,7 +3,7 @@ import { Headers, Http } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/map';
 
-import { ImageAdmin, FullImageAdmin } from './image.admin';
+import { ImageAdmin } from './image.admin';
 
 @Injectable()
 export class ImageAdminService {

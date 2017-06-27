@@ -1,8 +1,8 @@
 <h1>Add Page</h1>
-<form (submit)="addPage(image, $event)">
+<form (submit)="addPage(page)">
     <div>
         <label for="page.page_slug">Page URL</label><br>
-        <input [(ngModel)]="page.page_slug" type="text" name="page.page_slug" id="page.page_slug" placeholder="Page URL" required>
+        <input [(ngModel)]="page.page_slug" type="text" name="page.page_slug" id="page.page_slug" placeholder="Page URL">
     </div>
     <div>
         <label for="page.page_title">Page Title</label><br>

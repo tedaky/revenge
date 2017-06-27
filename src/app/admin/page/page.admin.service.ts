@@ -3,7 +3,7 @@ import { Headers, Http } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/map';
 
-import { Page, PageAdminMessage } from './page.admin';
+import { Page } from './page.admin';
 
 @Injectable()
 export class PageAdminService {
@@ -81,6 +81,29 @@ export class PageAdminService {
                 }
             }
         );
+    }
+
+    deletePage(id?: number) {
+        if (id) {
+            this.call = '/api/page/deletePage';
+            this.id = id;
+
+            if (!/localhost/.test(document.location.host)) {
+                this.url = this.call + '/' + this.id;
+            } else {
+                this.url = 'http://www.quickstart.dev' + this.call + '/' + this.id;
+            }
+
+            return this.http.delete(this.url).map(
+                (res) => {
+                    if (res.status !== 200) {
+                        throw new Error('page not found: ' + res.status);
+                    } else {
+                        return res.json();
+                    }
+                }
+            );
+        }
     }
 }
 

@@ -23,11 +23,11 @@ export class AddPageAdminComponent {
             page_slug: '',
             page_title: '',
             page_body: ''
-        }
+        };
         this.pageMessage = {};
     }
 
-    addPage(page: Page, event: Event) {
+    addPage(page: Page) {
         this.pageService.addPage(page).subscribe(
             (page) => {
                 this.pageMessage = page[0];

@@ -87,6 +87,25 @@ class page extends Controller {
         }
     }
 
+    function deletePage($arg = false) {
+        if($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            // query stored procedure
+            $sql = "CALL delete_page(?);";
+
+            // prepare the statement
+            $stmt = $this->conn->prepare($sql);
+            // throw error if fail
+            if (!$stmt->execute([$arg])) {
+                throw new Exception('Failed to execute');
+            }
+
+            $json = json_decode('[{"success": "image deleted successfully", "error": ""}]', true);
+
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+        }
+    }
+
     function insertPage() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pageSlug = $_POST['page_slug'];

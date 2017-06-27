@@ -43,7 +43,7 @@ export class AddImageAdminComponent {
         }
     }
 
-    addImage(image: ImageAdmin, event: Event) {
+    addImage(image: ImageAdmin) {
         this.imageService.addImage(image).subscribe(
             (img) => {
                 this.imageMessage = img[0];
