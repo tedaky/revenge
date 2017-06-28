@@ -16,6 +16,7 @@ import { Site, SiteMeta } from './site';
 
 export class SiteComponent implements OnInit, OnDestroy {
     site: Site;
+    siteMeta: SiteMeta[];
     body: any;
     sub: any;
     slug: string;
@@ -30,19 +31,23 @@ export class SiteComponent implements OnInit, OnDestroy {
             // Retrieve Pet with Id route param
             this.siteService.getSite(this.slug).subscribe(
                 (site) => {
-                    this.site = site[0];
+                    this.site = site.page[0];
 
-                    this.body = this.sanitizer.bypassSecurityTrustHtml(this.site.body);
-                    this.site.body = this.body;
+                    this.body = this.sanitizer.bypassSecurityTrustHtml(this.site.page_body);
+                    this.site.page_body = this.body;
+                    this.titleService.setTitle(this.site.page_title);
 
-                    this.titleService.setTitle(this.site.title);
-                    for (let meta of this.site.meta) {
-                        this.metaService.updateTag({ name: meta.name, content: meta.content });
+
+                    this.siteMeta = site.meta;
+                    if(this.siteMeta) {
+                        for (let meta of this.siteMeta) {
+                            this.metaService.updateTag({ name: meta.meta_name, content: meta.meta_content });
+                        }
                     }
                 },
                 (err) => {
                     this.site = err.json()[0];
-                    this.site.body = this.site.body + ': ' + err.status;
+                    this.site.page_body = this.site.page_body + ': ' + err.status;
                 }
             );
         });

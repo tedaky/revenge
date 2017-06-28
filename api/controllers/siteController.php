@@ -22,7 +22,7 @@ class site extends Controller {
           *    }
           * ]
           */
-        $sql = "SELECT
+        /*$sql = "SELECT
                     CONCAT(
                         '[{',
                         '^^^title^^^', ':', '^^^', `page`.`page_title`, '^^^', ',',
@@ -48,9 +48,36 @@ class site extends Controller {
                 ON `page`.`page_id` = `page_meta`.`page_meta_pid`
                 LEFT OUTER JOIN `meta`
                 ON `meta`.`meta_id` = `page_meta`.`page_meta_mid`
-                WHERE `page`.`page_slug` = ?";
+                WHERE `page`.`page_slug` = ?";*/
 
+
+        $results = array();
+
+        $sql = "CALL get_page_part_1(?);";
         $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt->execute([$slug])) {
+            throw new Exception('Failed to execute');
+        }
+        $results["page"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Close existing connection
+        $stmt->closeCursor();
+
+        $sql2 = "CALL get_page_part_2(?);";
+        $stmt2 = $this->conn->prepare($sql2);
+
+        if (!$stmt2->execute([$slug])) {
+            throw new Exception('Failed to execute');
+        }
+
+        $temp = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+        if($temp != null) {
+            $results["meta"] = $temp;
+        }
+
+
+
+        /*$stmt = $this->conn->prepare($sql);
         if (!$stmt->execute([$slug])) {
            throw new Exception('Failed to execute');
         }
@@ -68,8 +95,19 @@ class site extends Controller {
         } else {
             // decode json query string
             $json = json_decode($results[0]['page'], true);
+        }*/
+
+
+
+        if ($results == null) {
+            header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+            $json = json_decode('[{"body": "Page Not Found"}]', true);
+        } else {
+            $json = $results;
         }
+
         header('Content-Type: application/json; charset=UTF-8');
+        header('Expires: ' . date('D, d M Y H:i:s', time() + ($results["page"][0]["page_cache"])));
         // send json header and convert to proper json
         echo json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
     }

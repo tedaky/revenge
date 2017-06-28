@@ -26,7 +26,7 @@ export class AddPageAdminComponent {
     ngOnInit() {
         this.page = {
             page_id: null,
-            page_slug: null,
+            page_slug: '',
             page_title: null,
             page_body: null
         };

@@ -19,6 +19,7 @@ main {
     nav-admin-component {
         flex: 0 1 auto;
         overflow: auto;
+        min-width: 160px;
     }
     .site-wrapper {
         display: flex;
@@ -34,7 +35,7 @@ main {
         color: #fff;
 
         & > main {
-            flex: 1 0 auto;
+            flex: 1 1 auto;
             overflow: auto;
             position: relative;
             padding-right: 32px;

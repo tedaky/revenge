@@ -4,7 +4,7 @@ body {
 
 app-component {
     z-index: 3;
-    
+
     &:empty {
         & + .init-load {
             z-index: 5;
@@ -47,9 +47,20 @@ app-component {
 
 @keyframes loading-rotate {
     from {
-        transform: translateX(50%) translateY(50%) rotateZ(0deg) 
+        transform: translateX(50%) translateY(50%) rotateZ(0deg)
     }
     to {
         transform: translateX(50%) translateY(50%) rotateZ(360deg)
     }
+}
+
+site-component {
+    background-image: url('/api/image/src/66e419713c9abda763b59612eb9b09b3');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    display: flex;
+    height: 100vh;
+    align-items: center;
 }

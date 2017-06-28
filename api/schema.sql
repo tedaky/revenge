@@ -37,7 +37,7 @@ CREATE TABLE `image` (
   `image_alt` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`image_id`),
   UNIQUE KEY `media_unique_name_UNIQUE` (`image_unique_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,'loading.svg','loading','image/svg+xml',31622400,64,64,'2017-06-25 11:09:20','2017-06-25 11:09:20','loading'),(2,'image_icon.svg','image_icon','image/svg+xml',31622400,55,51,'2017-06-25 15:52:20','2017-06-25 15:52:20','Image Icon'),(3,'page_icon.svg','page_icon','image/svg+xml',31622400,42,56,'2017-06-25 15:52:20','2017-06-25 15:52:20','Page Icon');
+INSERT INTO `image` VALUES (1,'loading.svg','loading','image/svg+xml',31622400,64,64,'2017-06-25 11:09:20','2017-06-25 11:09:20','loading'),(2,'image_icon.svg','image_icon','image/svg+xml',31622400,55,51,'2017-06-25 15:52:20','2017-06-25 15:52:20','Image Icon'),(3,'page_icon.svg','page_icon','image/svg+xml',31622400,42,56,'2017-06-25 15:52:20','2017-06-25 15:52:20','Page Icon'),(4,'background.jpg','66e419713c9abda763b59612eb9b09b3','image/jpeg',7257600,2048,1152,'2017-06-27 06:06:47','2017-06-27 06:06:47','Background');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `meta` (
   `meta_name` varchar(55) NOT NULL,
   `meta_content` varchar(255) NOT NULL,
   PRIMARY KEY (`meta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,6 @@ CREATE TABLE `meta` (
 
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
-INSERT INTO `meta` VALUES (1,'keywords','portfolio'),(2,'description','Eric\'s Portfolio');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,12 +83,13 @@ DROP TABLE IF EXISTS `page`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `page` (
   `page_id` int(11) NOT NULL AUTO_INCREMENT,
-  `page_slug` varchar(55) NOT NULL,
+  `page_slug` varchar(55) NOT NULL DEFAULT '',
   `page_title` varchar(55) NOT NULL,
   `page_body` longtext,
+  `page_cache` int(11) DEFAULT '7889232',
   PRIMARY KEY (`page_id`),
   UNIQUE KEY `page_slug_UNIQUE` (`page_slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,6 @@ CREATE TABLE `page` (
 
 LOCK TABLES `page` WRITE;
 /*!40000 ALTER TABLE `page` DISABLE KEYS */;
-INSERT INTO `page` VALUES (1,'','Home Page','I am the home page'),(2,'about','About Page','I am the about page');
 /*!40000 ALTER TABLE `page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +113,7 @@ CREATE TABLE `page_meta` (
   `page_meta_pid` varchar(55) NOT NULL,
   `page_meta_mid` varchar(55) NOT NULL,
   PRIMARY KEY (`page_meta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +122,6 @@ CREATE TABLE `page_meta` (
 
 LOCK TABLES `page_meta` WRITE;
 /*!40000 ALTER TABLE `page_meta` DISABLE KEYS */;
-INSERT INTO `page_meta` VALUES (1,'1','1'),(2,'1','2');
 /*!40000 ALTER TABLE `page_meta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,6 +183,36 @@ BEGIN
 
 	DELETE FROM `image`
     WHERE `image`.`image_id` = arg;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `delete_page` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `delete_page`(IN arg INT)
+    DETERMINISTIC
+BEGIN
+	DELETE `meta`
+    FROM `meta`
+    INNER JOIN `page_meta`
+    ON `page_meta`.`page_meta_mid` = `meta`.`meta_id`
+    WHERE `page_meta`.`page_meta_pid` = arg;
+
+	DELETE FROM `page_meta`
+    WHERE `page_meta`.`page_meta_pid` = arg;
+
+	DELETE FROM `page`
+    WHERE `page`.`page_id` = arg;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -266,6 +294,28 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_page` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `get_page`(IN arg VARCHAR(55))
+    DETERMINISTIC
+BEGIN
+	SELECT `page`.`page_cache`
+    FROM `image`
+    WHERE `page`.`page_slug` = arg;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_page_info_part_1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -283,7 +333,8 @@ BEGIN
 		`page`.`page_id`,
         `page`.`page_slug`,
         `page`.`page_title`,
-        `page`.`page_body`
+        `page`.`page_body`,
+        `page`.`page_cache`
 	FROM `page`
     WHERE `page`.`page_id` = arg;
 END ;;
@@ -345,6 +396,62 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_page_part_1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `get_page_part_1`(IN arg VARCHAR(55))
+    DETERMINISTIC
+BEGIN
+	SELECT
+		`page`.`page_id`,
+        `page`.`page_slug`,
+        `page`.`page_title`,
+        `page`.`page_body`,
+        `page`.`page_cache`
+	FROM `page`
+    WHERE `page`.`page_slug` = arg;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_page_part_2` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `get_page_part_2`(IN arg VARCHAR(55))
+    DETERMINISTIC
+BEGIN
+	SELECT
+		`meta`.`meta_id`,
+        `meta`.`meta_name`,
+        `meta`.`meta_content`
+	FROM `meta`
+    JOIN `page_meta`
+    ON `meta`.`meta_id` = `page_meta`.`page_meta_mid`
+    JOIN `page`
+    ON `page_meta`.`page_meta_pid` = `page`.`page_id`
+    WHERE `page`.`page_slug` = arg;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `insert_image` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -392,6 +499,44 @@ BEGIN
         imageAlt
     );
 
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_page` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE PROCEDURE `insert_page`(
+	IN pageSlug VARCHAR(55),
+    IN pageTitle VARCHAR(55),
+    IN pageBody LONGTEXT,
+    IN pageCache INT
+)
+    DETERMINISTIC
+BEGIN
+	INSERT INTO `page`
+	(
+		`page_slug`,
+		`page_title`,
+		`page_body`,
+        `page_cache`
+    )
+	VALUES
+	(
+		pageSlug,
+		pageTitle,
+		pageBody,
+        pageCache
+    );
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -473,4 +618,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-26 12:15:59
+-- Dump completed on 2017-06-27 19:36:30
