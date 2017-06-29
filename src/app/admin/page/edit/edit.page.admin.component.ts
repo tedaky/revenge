@@ -8,13 +8,13 @@ import { PageAdminService } from '../page.admin.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'detail-page-admin-component',
-    templateUrl: 'detail.page.admin.template.html',
-    styleUrls: ['detail.page.admin.component.scss'],
+    selector: 'edit-page-admin-component',
+    templateUrl: 'edit.page.admin.template.html',
+    styleUrls: ['edit.page.admin.component.scss'],
     providers: [ PageAdminService ]
 })
 
-export class DetailPageAdminComponent {
+export class EditPageAdminComponent {
     page: Page;
     pageMeta: PageMeta;
     pageMessage?: PageAdminMessage;

@@ -6,8 +6,8 @@
         <th>Slug</th>
     </tr>
     <tr *ngFor="let page of pages">
-        <td><a [routerLink]="['/', 'admin', 'page', page.page_id]">{{ page.page_id }}</a></td>
-        <td><a [routerLink]="['/', 'admin', 'page', page.page_id]">{{ page.page_title }}</a></td>
+        <td><a [routerLink]="['/', 'admin', 'page', 'edit', page.page_id]">{{ page.page_id }}</a></td>
+        <td><a [routerLink]="['/', 'admin', 'page', 'edit', page.page_id]">{{ page.page_title }}</a></td>
         <td>{{ page.page_slug }}</td>
     </tr>
 </table>

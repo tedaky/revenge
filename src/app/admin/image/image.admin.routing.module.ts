@@ -10,8 +10,13 @@ const imageAdminRoutes: Routes = [
                 loadChildren: 'app/admin/image/add/add.image.admin.module#AddImageAdminModule'
             },
             {
-                path: ':id',
-                loadChildren: 'app/admin/image/detail/detail.image.admin.module#DetailImageAdminModule'
+                path: 'edit',
+                children: [
+                    {
+                        path: ':id',
+                        loadChildren: 'app/admin/image/edit/edit.image.admin.module#EditImageAdminModule'
+                    }
+                ]
             },
             {
                 path: '',

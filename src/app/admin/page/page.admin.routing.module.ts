@@ -10,8 +10,13 @@ const pageAdminRoutes: Routes = [
                 loadChildren: 'app/admin/page/add/add.page.admin.module#AddPageAdminModule'
             },
             {
-                path: ':id',
-                loadChildren: 'app/admin/page/detail/detail.page.admin.module#DetailPageAdminModule'
+                path: 'edit',
+                children: [
+                    {
+                        path: ':id',
+                        loadChildren: 'app/admin/page/edit/edit.page.admin.module#EditPageAdminModule'
+                    }
+                ]
             },
             {
                 path: '',

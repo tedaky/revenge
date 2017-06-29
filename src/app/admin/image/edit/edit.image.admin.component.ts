@@ -7,13 +7,13 @@ import { ImageAdminService } from '../image.admin.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'detail-image-admin-component',
-    templateUrl: 'detail.image.admin.template.html',
-    styleUrls: ['detail.image.admin.component.scss'],
+    selector: 'edit-image-admin-component',
+    templateUrl: 'edit.image.admin.template.html',
+    styleUrls: ['edit.image.admin.component.scss'],
     providers: [ ImageAdminService ]
 })
 
-export class DetailImageAdminComponent {
+export class EditImageAdminComponent {
     image: FullImageAdmin;
     imageMessage?: ImageAdminMessage;
     sub: any;

@@ -8,15 +8,15 @@
     </tr>
     <tr *ngFor="let image of images">
         <td>
-            <a [routerLink]="['/', 'admin', 'image', image.image_id]">
+            <a [routerLink]="['/', 'admin', 'image', 'edit', image.image_id]">
                 <img [src]="'/api/image/src/' + image.image_unique_name" [alt]="image.image_alt" width="35" height="35" />
             </a>
         </td>
         <td>
-            <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_id }}</a>
+            <a [routerLink]="['/', 'admin', 'image', 'edit', image.image_id]">{{ image.image_id }}</a>
         </td>
         <td>
-            <a [routerLink]="['/', 'admin', 'image', image.image_id]">{{ image.image_original_name }}</a>
+            <a [routerLink]="['/', 'admin', 'image', 'edit', image.image_id]">{{ image.image_original_name }}</a>
         </td>
         <td>
             {{ image.image_modified | date:medium }}
