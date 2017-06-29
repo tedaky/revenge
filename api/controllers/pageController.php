@@ -76,7 +76,7 @@ class page extends Controller {
 
                 if ($results == null) {
                     header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
-                    $json = json_decode('[{"success": "", "error": "No images found"}]', true);
+                    $json = json_decode('[{"success": "", "error": "No page found"}]', true);
                 } else {
                     $json = $results;
                 }
@@ -100,7 +100,7 @@ class page extends Controller {
                 throw new Exception('Failed to execute');
             }
 
-            $json = json_decode('[{"success": "image deleted successfully", "error": ""}]', true);
+            $json = json_decode('[{"success": "page deleted successfully", "error": ""}]', true);
 
             header('Content-Type: application/json; charset=UTF-8');
             echo json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );

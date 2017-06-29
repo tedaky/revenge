@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ImageAdminMessage, FullImageAdmin } from '../image.admin';
+import { ImageAdminMessage, FullImageAdmin, CacheSecondsToDHMS } from '../image.admin';
 import { ImageAdminService } from '../image.admin.service';
 
 @Component({
@@ -19,6 +19,8 @@ export class DetailImageAdminComponent {
     sub: any;
     id: number;
 
+    cacheSecondsToDHMS: CacheSecondsToDHMS;
+
     constructor(private imageService: ImageAdminService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -26,10 +28,12 @@ export class DetailImageAdminComponent {
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
 
-            // Retrieve Pet with Id route param
+            // Retrieve image with Id route param
             this.imageService.getImage(this.id).subscribe(
                 (img) => {
                     this.image = img;
+
+                    this.cacheSecondsToDHMS = this.secondsToString(this.image.image_cache);
                 },
                 (err) => {
                     console.log(err);
@@ -57,5 +61,19 @@ export class DetailImageAdminComponent {
                 }
             );
         });
+    }
+
+
+    secondsToString(sec) {
+        var days = Math.floor(sec / 86400);
+        var hours = Math.floor((sec % 86400) / 3600);
+        var minutes = Math.floor(((sec % 86400) % 3600) / 60);
+        var seconds = ((sec % 86400) % 3600) % 60;
+        return {
+            "days": days,
+            "hours": hours,
+            "minutes": minutes,
+            "seconds": seconds
+        };
     }
 }

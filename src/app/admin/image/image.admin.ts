@@ -27,3 +27,9 @@ export class ImageAdminMessage {
     success?: string;
     error?: string;
 }
+export class CacheSecondsToDHMS {
+    days?: number;
+    hours?: number;
+    minutes?: number;
+    seconds?: number;
+}

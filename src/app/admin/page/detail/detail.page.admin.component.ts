@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Page, PageMeta, PageTotal, PageAdminMessage } from '../page.admin';
+import { Page, PageMeta, PageTotal, PageAdminMessage, CacheSecondsToDHMS } from '../page.admin';
 import { PageAdminService } from '../page.admin.service';
 
 @Component({
@@ -22,6 +22,8 @@ export class DetailPageAdminComponent {
     id: number;
     body: any;
 
+    cacheSecondsToDHMS: CacheSecondsToDHMS;
+
     constructor(private pageService: PageAdminService, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
@@ -29,13 +31,15 @@ export class DetailPageAdminComponent {
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
 
-            // Retrieve Pet with Id route param
+            // Retrieve page with Id route param
             this.pageService.getPage(this.id).subscribe(
                 (page) => {
                     this.page = page.page[0];
 
                     this.body = this.sanitizer.bypassSecurityTrustHtml(this.page.page_body);
                     this.page.page_body = this.body;
+
+                    this.cacheSecondsToDHMS = this.secondsToString(this.page.page_cache);
 
                     this.pageMeta = page.meta;
                 },
@@ -67,4 +71,17 @@ export class DetailPageAdminComponent {
         });
     }
 
+
+    secondsToString(sec) {
+        var days = Math.floor(sec / 86400);
+        var hours = Math.floor((sec % 86400) / 3600);
+        var minutes = Math.floor(((sec % 86400) % 3600) / 60);
+        var seconds = ((sec % 86400) % 3600) % 60;
+        return {
+            "days": days,
+            "hours": hours,
+            "minutes": minutes,
+            "seconds": seconds
+        };
+    }
 }

@@ -12,6 +12,13 @@
         <strong>Page Title</strong><br>
         {{ page.page_title }}
     </div>
+    <div *ngIf="cacheSecondsToDHMS">
+        <strong>Page Cache</strong><br>
+        {{ cacheSecondsToDHMS.days }} {{ cacheSecondsToDHMS.days === 1 ? "Day" : "Days" }}
+        {{ cacheSecondsToDHMS.hours }} {{ cacheSecondsToDHMS.hours === 1 ? "Hour" : "Hours" }}
+        {{ cacheSecondsToDHMS.minutes }} {{ cacheSecondsToDHMS.minutes === 1 ? "Minute" : "Minutes" }}
+        {{ cacheSecondsToDHMS.seconds }} {{ cacheSecondsToDHMS.seconds === 1 ? "Second" : "Seconds" }}
+    </div>
     <div>
         <strong>Page Body</strong><br>
         <section [innerHtml]="page.page_body"></section>

@@ -12,9 +12,12 @@
             <strong>Image Original Name</strong><br>
             {{ image.image_original_name }}
         </div>
-        <div>
+        <div *ngIf="cacheSecondsToDHMS">
             <strong>Image Cache</strong><br>
-            {{ image.image_cache }}
+            {{ cacheSecondsToDHMS.days }} {{ cacheSecondsToDHMS.days === 1 ? "Day" : "Days" }}
+            {{ cacheSecondsToDHMS.hours }} {{ cacheSecondsToDHMS.hours === 1 ? "Hour" : "Hours" }}
+            {{ cacheSecondsToDHMS.minutes }} {{ cacheSecondsToDHMS.minutes === 1 ? "Minute" : "Minutes" }}
+            {{ cacheSecondsToDHMS.seconds }} {{ cacheSecondsToDHMS.seconds === 1 ? "Second" : "Seconds" }}
         </div>
         <div>
             <strong>Image Created</strong><br>
