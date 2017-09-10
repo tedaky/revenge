@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, ElementRef } from '@angular/core';
 import { Title, Meta, BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router'
@@ -14,27 +14,26 @@ import { Site, SiteMeta } from './site';
     providers: [ SiteService ]
 })
 
-export class SiteComponent implements OnInit, OnDestroy {
+export class SiteComponent implements OnInit, OnDestroy, AfterViewChecked {
     site: Site;
     siteMeta: SiteMeta[];
-    body: any;
     sub: any;
-    slug: string;
 
-    constructor(private titleService: Title, private metaService: Meta, private siteService: SiteService, private route: ActivatedRoute, private sanitizer: DomSanitizer) { }
+    constructor(private titleService: Title, private metaService: Meta, private siteService: SiteService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private elementRef: ElementRef) { }
 
     ngOnInit() {
         // Subscribe to route params
         this.sub = this.route.params.subscribe(params => {
-            this.slug = params['slug'];
+            let slug: string = params['slug'];
+            let loadStart: number = new Date().getTime();
 
             // Retrieve Pet with Id route param
-            this.siteService.getSite(this.slug).subscribe(
+            this.siteService.getSite(slug).subscribe(
                 (site) => {
                     this.site = site.page[0];
 
-                    this.body = this.sanitizer.bypassSecurityTrustHtml(this.site.page_body);
-                    this.site.page_body = this.body;
+                    let body: any = this.sanitizer.bypassSecurityTrustHtml(this.site.page_body);
+                    this.site.page_body = body;
                     this.titleService.setTitle(this.site.page_title);
 
 
@@ -44,13 +43,45 @@ export class SiteComponent implements OnInit, OnDestroy {
                             this.metaService.updateTag({ name: meta.meta_name, content: meta.meta_content });
                         }
                     }
+
+                    let loadEnd: number = new Date().getTime();
+                    console.log('Component Load Time: ' + (loadEnd - loadStart));
                 },
                 (err) => {
                     this.site = err.json()[0];
                     this.site.page_body = this.site.page_body + ': ' + err.status;
+
+                    let loadEnd: number = new Date().getTime();
+                    console.log('Component Load Time: ' + (loadEnd - loadStart));
                 }
             );
         });
+    }
+
+    ngAfterViewChecked() {
+        let image = this.elementRef.nativeElement.querySelectorAll('img');
+        if (image.length) {
+            for (let i = 0; i < image.length; i++) {
+                if(!image[i].getAttribute('data-load-start')) {
+                    let loadStart: any = new Date().getTime();
+                    image[i].setAttribute('data-load-start', loadStart);
+                }
+                this.imageComplete(image[i]);
+            }
+        }
+    }
+
+    imageComplete(image: HTMLImageElement) {
+        let completed: boolean = image.complete;
+        if(!completed) {
+            setTimeout(this.imageComplete, 1, image);
+        } else {
+            let loadEnd: any = new Date().getTime();
+            if(!image.getAttribute('data-load-end')) {
+                image.setAttribute('data-load-end', loadEnd);
+                console.log('Image Load Time: ' + (loadEnd - parseInt(image.getAttribute('data-load-start'))));
+            }
+        }
     }
 
     ngOnDestroy() {
