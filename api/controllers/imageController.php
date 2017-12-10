@@ -39,6 +39,30 @@ class image extends Controller {
         }
     }
 
+    function getImageId($arg = false) {
+        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            // query stored procedure
+            $sql = "CALL get_image_id(?)";
+
+            // prepare the statement
+            $stmt = $this->conn->prepare($sql);
+
+            if (!$stmt->execute([$arg])) {
+                throw new Exception('Failed to execute');
+            }
+            $results = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($results == null) {
+                header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+                $json = json_decode('[{"success": "", "error": "No images found"}]', true);
+            } else {
+                $json = $results;
+            }
+
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        }
+    }
+
     function getImageList() {
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
             $sql = "call get_image_list();";
