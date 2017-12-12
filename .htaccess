@@ -13,3 +13,4 @@ RewriteRule ^api/(.*) api/$1 [L]
 # For build
 RewriteRule ^$ dist/ [L]
 RewriteRule (.*) dist/$1 [L]
+
