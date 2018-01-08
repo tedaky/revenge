@@ -15,9 +15,9 @@ export class NavSiteService {
         if (!/localhost/.test(document.location.host)) {
             this.url = this.call;
         } else {
-            this.url = 'http://www.quickstart.dev' + this.call;
+            this.url = this.call;
         }
-        
+
         return this.http.get(this.url).map( res => res.json() );
     }
 }

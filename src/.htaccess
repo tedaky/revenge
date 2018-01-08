@@ -1,9 +1,8 @@
+DirectoryIndex index.html index.php
+
 RewriteEngine On
 
 RewriteBase /
-
-RewriteCond %{HTTP_HOST} ^quickstart.dev
-RewriteRule ^(.*)$ http://www.quickstart.dev/$1 [R=301,L]
 
 #RewriteBase /dist/
 

@@ -21,7 +21,7 @@ export class ImageAdminService {
         if (!/localhost/.test(document.location.host)) {
             this.url = this.call;
         } else {
-            this.url = 'http://www.quickstart.dev' + this.call;
+            this.url = this.call;
         }
 
         return this.http.get(this.url).map(
@@ -43,7 +43,7 @@ export class ImageAdminService {
             if (!/localhost/.test(document.location.host)) {
                 this.url = this.call + '/' + this.id;
             } else {
-                this.url = 'http://www.quickstart.dev' + this.call + '/' + this.id;
+                this.url = this.call + '/' + this.id;
             }
 
             return this.http.get(this.url).map(
@@ -64,13 +64,13 @@ export class ImageAdminService {
         if (!/localhost/.test(document.location.host)) {
             this.url = this.call;
         } else {
-            this.url = 'http://www.quickstart.dev' + this.call;
+            this.url = this.call;
         }
 
-        let input = new FormData();
-        input.append("image_original_name", image.image_original_name);
-        input.append("image_alt", image.image_alt);
-        input.append("image_cache", image.image_cache.toString());
+        const input = new FormData();
+        input.append('image_original_name;', image.image_original_name);
+        input.append('image_alt;', image.image_alt);
+        input.append('image_cache;', image.image_cache.toString());
 
         return this.http.post(this.url, input, this.headers).map(
             (res) => {
@@ -91,7 +91,7 @@ export class ImageAdminService {
             if (!/localhost/.test(document.location.host)) {
                 this.url = this.call + '/' + this.id;
             } else {
-                this.url = 'http://www.quickstart.dev' + this.call + '/' + this.id;
+                this.url = this.call + '/' + this.id;
             }
 
             return this.http.delete(this.url).map(
